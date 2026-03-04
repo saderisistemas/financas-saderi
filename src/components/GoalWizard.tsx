@@ -116,9 +116,11 @@ export function GoalWizard({ onClose, onSave }: { onClose: () => void, onSave: (
                                 value={formData.deadline_weeks}
                                 onChange={e => setFormData({ ...formData, deadline_weeks: e.target.value })}
                             >
-                                <option value="4">4 Semanas (Ciclo Curto)</option>
+                                <option value="4">4 Semanas (Curto Prazo - 1 Mês)</option>
                                 <option value="12">12 Semanas (90 Dias - Recomendado)</option>
-                                <option value="24">24 Semanas</option>
+                                <option value="24">24 Semanas (Médio Prazo - 6 Meses)</option>
+                                <option value="52">52 Semanas (Longo Prazo - 1 Ano)</option>
+                                <option value="104">104 Semanas (Longo Prazo - 2 Anos)</option>
                             </select>
                         </div>
 
