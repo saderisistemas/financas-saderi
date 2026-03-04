@@ -12,7 +12,7 @@ export function Auth() {
 
     useEffect(() => {
         // Check if user came from a password reset email link
-        supabase.auth.onAuthStateChange(async (event, session) => {
+        supabase.auth.onAuthStateChange(async (event) => {
             if (event == "PASSWORD_RECOVERY") {
                 setIsForgotPassword(true);
                 setMsg("Digite a nova senha abaixo e clique em Redefinir.");

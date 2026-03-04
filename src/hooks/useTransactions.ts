@@ -31,7 +31,7 @@ export function useTransactions() {
             .on(
                 'postgres_changes',
                 { event: '*', schema: 'public', table: 'transactions' },
-                (payload) => {
+                () => {
                     fetchTxs();
                 }
             )
