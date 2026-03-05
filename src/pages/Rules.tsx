@@ -1,27 +1,66 @@
-import { Card, Badge } from '../components/ui';
-import { AlertTriangle, ShieldAlert } from 'lucide-react';
+import { Card, Badge, Button, Input, Select } from '../components/ui';
+import { AlertTriangle, ShieldAlert, Plus } from 'lucide-react';
 import { InfoTooltip } from '../components/InfoTooltip';
+import { Modal } from '../components/Modal';
+import { useState } from 'react';
 
 export function Rules() {
+    const [isAddRuleOpen, setIsAddRuleOpen] = useState(false);
+
+    const handleSaveRule = (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsAddRuleOpen(false);
+    };
+
     return (
         <div className="flex flex-col animate-fade-in pb-10">
 
-            <header className="mb-6 flex items-center">
-                <div>
-                    <h1 className="text-2xl font-bold tracking-tight text-white mb-1">Cinto de Segurança</h1>
-                    <p className="text-xs font-medium text-slate-400">Suas barreiras para sair do vermelho</p>
+            <header className="mb-6 flex justify-between items-center">
+                <div className="flex items-center">
+                    <div>
+                        <h1 className="text-2xl font-bold tracking-tight text-white mb-1">Cinto de Segurança</h1>
+                        <p className="text-xs font-medium text-slate-400">Suas barreiras para sair do vermelho</p>
+                    </div>
+                    <InfoTooltip
+                        title="Por que ter Regras?"
+                        content={
+                            <div className="space-y-2">
+                                <p>O aplicativo não gasta dinheiro sozinho; quem passa o cartão (ou faz o PIX) é você.</p>
+                                <p>O <b>Cinto de Segurança</b> existe para criar atritos comportamentais entre você e o gasto por impulso.</p>
+                                <p>Toda vez que quiser "abrir uma exceção", venha ler as regras em voz alta.</p>
+                            </div>
+                        }
+                    />
                 </div>
-                <InfoTooltip
-                    title="Por que ter Regras?"
-                    content={
-                        <div className="space-y-2">
-                            <p>O aplicativo não gasta dinheiro sozinho; quem passa o cartão (ou faz o PIX) é você.</p>
-                            <p>O <b>Cinto de Segurança</b> existe para criar atritos comportamentais entre você e o gasto por impulso.</p>
-                            <p>Toda vez que quiser "abrir uma exceção", venha ler as regras em voz alta.</p>
-                        </div>
-                    }
-                />
+                <Button
+                    onClick={() => setIsAddRuleOpen(true)}
+                    className="w-10 h-10 p-0 rounded-full flex items-center justify-center shadow-lg shadow-[var(--color-primary-glow)]"
+                >
+                    <Plus size={20} />
+                </Button>
             </header>
+
+            <Modal isOpen={isAddRuleOpen} onClose={() => setIsAddRuleOpen(false)} title="Nova Regra">
+                <form onSubmit={handleSaveRule} className="space-y-4">
+                    <Input label="Name" placeholder="Nome da regra de barreira" required />
+                    <Select label="Category" required>
+                        <option value="">Selecione...</option>
+                        <option value="envelope">Envelope</option>
+                        <option value="conta">Conta Intocável</option>
+                        <option value="gatilho">Gatilho de Prazo</option>
+                    </Select>
+                    <Input label="Threshold" type="number" step="0.01" placeholder="Limite Financeiro" />
+
+                    <div className="pt-4 flex gap-3">
+                        <Button type="button" variant="ghost" className="flex-1" onClick={() => setIsAddRuleOpen(false)}>
+                            Cancelar
+                        </Button>
+                        <Button type="submit" className="flex-1">
+                            Salvar Regra
+                        </Button>
+                    </div>
+                </form>
+            </Modal>
 
             <div className="mb-6 bg-red-500/10 border border-red-500/20 rounded-2xl p-4 relative overflow-hidden">
                 <div className="absolute top-0 right-0 p-4 opacity-5">

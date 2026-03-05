@@ -1,7 +1,16 @@
-import { Card, Button, Badge } from '../components/ui';
+import { Card, Button, Badge, Input, Select } from '../components/ui';
 import { Plus, Search, Filter } from 'lucide-react';
+import { Modal } from '../components/Modal';
+import { useState } from 'react';
 
 export function Transactions() {
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
+    const handleSaveTransaction = (e: React.FormEvent) => {
+        e.preventDefault(); // Simulate save
+        setIsAddModalOpen(false);
+    };
+
     return (
         <div className="flex flex-col h-full animate-fade-in">
 
@@ -10,10 +19,35 @@ export function Transactions() {
                     <h1 className="text-2xl font-bold tracking-tight text-white mb-1">Gastos & Cortes</h1>
                     <p className="text-xs font-medium text-emerald-400">Objetivo: Cortar R$ 500 / mês</p>
                 </div>
-                <Button className="w-10 h-10 p-0 rounded-full flex items-center justify-center shadow-lg shadow-[var(--color-primary-glow)]">
+                <Button
+                    onClick={() => setIsAddModalOpen(true)}
+                    className="w-10 h-10 p-0 rounded-full flex items-center justify-center shadow-lg shadow-[var(--color-primary-glow)]"
+                >
                     <Plus size={20} />
                 </Button>
             </header>
+
+            <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)} title="Nova Transação">
+                <form onSubmit={handleSaveTransaction} className="space-y-4">
+                    <Input label="Título (ex: Pizza)" placeholder="Onde foi gasto?" required />
+                    <Input label="Valor (R$)" type="number" step="0.01" placeholder="0.00" required />
+                    <Input label="Data" type="date" required />
+                    <Select label="Categoria" required>
+                        <option value="">Selecione...</option>
+                        <option value="essencial">Essencial</option>
+                        <option value="lazer">Lazer</option>
+                        <option value="divida">Dívida</option>
+                    </Select>
+                    <div className="pt-4 flex gap-3">
+                        <Button type="button" variant="ghost" className="flex-1" onClick={() => setIsAddModalOpen(false)}>
+                            Cancelar
+                        </Button>
+                        <Button type="submit" className="flex-1">
+                            Salvar
+                        </Button>
+                    </div>
+                </form>
+            </Modal>
 
             {/* Search Bar */}
             <div className="relative mb-6">

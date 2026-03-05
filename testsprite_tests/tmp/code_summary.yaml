@@ -1,0 +1,62 @@
+version: "2"
+type: frontend
+tech_stack:
+  - TypeScript
+  - React
+  - Vite
+  - Tailwind CSS
+  - Supabase
+routes:
+  - path: /
+    file: src/pages/Dashboard.tsx
+    auth_required: true
+    description: Main dashboard overview
+  - path: /orcamento
+    file: src/pages/Budget.tsx
+    auth_required: true
+    description: Budget planning and limits
+  - path: /gastos
+    file: src/pages/Transactions.tsx
+    auth_required: true
+    description: List of transactions/expenses
+  - path: /metas
+    file: src/pages/Goals.tsx
+    auth_required: true
+    description: Financial goals tracking
+  - path: /regras
+    file: src/pages/Rules.tsx
+    auth_required: true
+    description: Financial rules and protections
+  - path: /auth
+    file: src/components/Auth.tsx
+    auth_required: false
+    description: User login and password reset
+features:
+  - name: User Login
+    description: Login with email and password
+    files:
+      - src/components/Auth.tsx
+    entry_route: /auth
+    user_interactions:
+      - Fill email input field
+      - Fill password input field
+      - Click Sign In button
+    api_calls:
+      - method: POST
+        endpoint: supabase.auth.signInWithPassword
+    auth_required: false
+  - name: Manage Goals
+    description: Create and view short and long term goals
+    files:
+      - src/pages/Goals.tsx
+      - src/components/GoalWizard.tsx
+    entry_route: /metas
+    user_interactions:
+      - View goals
+      - Click New Goal button
+      - Fill out goal wizard inputs
+    api_calls:
+      - method: GET
+        endpoint: supabase/goals
+    auth_required: true
+known_limitations: []

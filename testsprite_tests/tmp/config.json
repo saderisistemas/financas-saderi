@@ -1,0 +1,20 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:5173",
+  "loginUser": "saderivigilancia@gmail.com",
+  "loginPassword": "caspita11",
+  "executionArgs": {
+    "projectName": "APP Financas 2026",
+    "projectPath": "c:\\Users\\patrimonium\\Documents\\APP Financas 2026",
+    "testIds": [],
+    "additionalInstruction": "Re-run everything from scratch.",
+    "serverMode": "development",
+    "envs": {
+      "API_KEY": "sk-user-Nt9if1ztzE3PVeCcy5qgZAbpkTE0SSQjquO2sigBjsd6Q3U6gOQmsdqqdI0Y3tMxoGfFnQjjwyNHRBvbDmYKGHFRtwEHq1kG3qGv2mlnJVysJ9CTagPMZ1yBUv4lUaFXvd8"
+    }
+  },
+  "serverPort": 58593,
+  "proxy": "http://dd12052d-b283-49f8-a11b-ccca2c56d804:UjlZhYiJHZaz6NNog31sU2pCkbPhMooJ@tun.testsprite.com:8080"
+}

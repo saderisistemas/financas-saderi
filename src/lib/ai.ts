@@ -21,9 +21,17 @@ export async function askFinancialCoach(prompt: string, context?: any) {
   `;
 
     try {
-        const result = await model.generateContent([
-            { text: systemMessage },
-            { text: `Usuário diz: ${prompt}` }
+        const timeoutPromise = new Promise<never>((_, reject) =>
+            setTimeout(() => reject(new Error('AI request timed out')), 10000)
+        );
+
+        // @ts-ignore
+        const result = await Promise.race([
+            model.generateContent([
+                { text: systemMessage },
+                { text: `Usuário diz: ${prompt}` }
+            ]),
+            timeoutPromise
         ]);
 
         return result.response.text();
@@ -41,7 +49,15 @@ export async function categorizeExpenseAI(description: string) {
   `;
 
     try {
-        const result = await model.generateContent(prompt);
+        const timeoutPromise = new Promise<never>((_, reject) =>
+            setTimeout(() => reject(new Error('AI request timed out')), 10000)
+        );
+
+        // @ts-ignore
+        const result = await Promise.race([
+            model.generateContent(prompt),
+            timeoutPromise
+        ]);
         const text = result.response.text().replace(/```json/g, '').replace(/```/g, '').trim();
         return JSON.parse(text);
     } catch {

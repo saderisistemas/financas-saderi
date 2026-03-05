@@ -1,8 +1,17 @@
-import { Card, Button } from '../components/ui';
+import { Card, Button, Input } from '../components/ui';
 import { Settings2, PiggyBank, BriefcaseMedical, Coffee, CreditCard } from 'lucide-react';
 import { InfoTooltip } from '../components/InfoTooltip';
+import { Modal } from '../components/Modal';
+import { useState } from 'react';
 
 export function Budget() {
+    const [isBudgetOpen, setIsBudgetOpen] = useState(false);
+
+    const handleSaveBudget = (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsBudgetOpen(false);
+    };
+
     return (
         <div className="flex flex-col animate-fade-in pb-10">
 
@@ -24,10 +33,26 @@ export function Budget() {
                         }
                     />
                 </div>
-                <Button variant="ghost" className="p-2">
+                <Button variant="ghost" className="p-2" onClick={() => setIsBudgetOpen(true)}>
                     <Settings2 size={24} className="text-slate-400" />
                 </Button>
             </header>
+
+            <Modal isOpen={isBudgetOpen} onClose={() => setIsBudgetOpen(false)} title="Configurar Orçamento">
+                <form onSubmit={handleSaveBudget} className="space-y-4">
+                    <Input label="Renda do Mês (R$)" type="number" step="0.01" placeholder="Sua renda" required />
+                    <Input label="Teto Essencial (R$)" type="number" step="0.01" placeholder="Gastos fixos" required />
+
+                    <div className="pt-4 flex gap-3">
+                        <Button type="button" variant="ghost" className="flex-1" onClick={() => setIsBudgetOpen(false)}>
+                            Cancelar
+                        </Button>
+                        <Button type="submit" className="flex-1">
+                            Salvar Orçamento
+                        </Button>
+                    </div>
+                </form>
+            </Modal>
 
             {/* Renda Setup */}
             <Card glass className="mb-8 flex justify-between items-center bg-gradient-to-r from-[var(--color-primary)]/20 to-[var(--color-surface)] border-[var(--color-primary)]/30">
@@ -35,7 +60,7 @@ export function Budget() {
                     <p className="text-xs text-[var(--color-primary)] font-bold uppercase tracking-wider mb-1">Renda do Mês</p>
                     <h2 className="text-3xl font-extrabold text-white">R$ 15.000</h2>
                 </div>
-                <Button variant="secondary" className="px-3 py-1.5 text-xs h-auto">Alterar</Button>
+                <Button variant="secondary" className="px-3 py-1.5 text-xs h-auto" onClick={() => setIsBudgetOpen(true)}>Alterar</Button>
             </Card>
 
             <div className="space-y-5">
